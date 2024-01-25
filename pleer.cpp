@@ -65,6 +65,13 @@ public:
 	{
 		return durationTrack;
 	}
+
+	void PrintTrack()
+	{
+
+		std::cout << nameTrack << " " << dateOfCreationTrack << " " << durationTrack << std::endl;
+
+	}
 };
 
 
@@ -75,12 +82,26 @@ int main()
 	
 	std::vector <Track> track;
 	Track composition1;
+	Track composition2;
+	Track composition3;
 
 	composition1.SetRecordNameTrack();
 	composition1.SetRecordDateOfCreation();
 	composition1.SetDurationTrack();
 	track.push_back(composition1);
+
+	composition2.SetRecordNameTrack();
+	composition2.SetRecordDateOfCreation();
+	composition2.SetDurationTrack();
+	track.push_back(composition2);
+
+	composition3.SetRecordNameTrack();
+	composition3.SetRecordDateOfCreation();
+	composition3.SetDurationTrack();
+	track.push_back(composition3);
 		
+	//track[2].PrintTrack();
+
 	std::string command;
 
 	do
