@@ -56,7 +56,7 @@ public:
 
 	void SetDurationTrack()
 	{
-		int valueDurationTrack = std::rand() % 20;
+		int valueDurationTrack = std::rand() % 20 + 10;
 		durationTrack = valueDurationTrack;
 	}
 
@@ -68,10 +68,7 @@ public:
 	void PrintTrack()
 	{
 		std::cout << nameTrack << " " << dateOfCreationTrack << " " << durationTrack << std::endl;
-	}
-
-	
-	
+	}	
 };
 
 class Player
@@ -97,14 +94,6 @@ public:
 		return songName;
 	}
 
-
-
-
-
-
-
-
-
 	int GetNumberSong(std::string songName, std::vector <Track> track)
 	{
 		for (int i = 0; i < track.size(); ++i) {
@@ -115,19 +104,12 @@ public:
 		}
 	}
 
-	void GetSongCreationDate(std::string songName, std::vector <Track> track)
+	int GetNextNumberSong(std::vector <Track> track)
 	{
-
-		track[GetNumberSong(songName, track)].PrintTrack();
-
-		//dateOfCreationMusic = GetNumberSong(songName, track);
-		////dateOfCreationMusic = track.GetDateOfCreationTrack(GetNumberSong(songName, track));
-		//
-		//return dateOfCreationMusic;
-	}
-	
+		int number = std::rand() % track.size();
+		return number;
+	}	
 };
-
 
 int main()
 {
@@ -152,19 +134,8 @@ int main()
 	composition3.SetRecordDateOfCreation();
 	composition3.SetDurationTrack();
 	track.push_back(composition3);
-		
-
-
-
 
 	Player examination;
-
-	
-
-	
-	track[0].PrintTrack();
-	track[1].PrintTrack();
-	track[2].PrintTrack();
 	
 	std::string command; 
 	std::string songName;
@@ -203,85 +174,19 @@ int main()
 			timer = 0;
 			is_playback = false;
 		}
+		else if (command == "next") 
+		{
+			int nextNumber = examination.GetNextNumberSong(track);
+			track[nextNumber].PrintTrack();
+
+			timer = track[nextNumber].GetDurationTrack();			
+			std::time_t tt_nextTimer = std::time(nullptr) + timer;
+			std::tm time_nextTimer;
+			localtime_s(&time_nextTimer, &tt_nextTimer);
+			timer = tt_nextTimer;
+			is_playback = true;
+		}
 
 	} while (command != "exit");
-
-
-
-
-
-
-
     return 0;
 }
-
-
-
-////// C++ Program to create 
-//// a vector of class objects 
-//#include <iostream> 
-//#include <string> 
-//#include <vector> 
-//
-//using namespace std;
-//
-//int randomInt(int start, int range)
-//{
-//	// A function to generate random numbers 
-//	return (start + rand() % range);
-//}
-//
-//string randomString(int len)
-//{
-//	// A function to generate random strings of length --> 
-//	// "len" 
-//	string str;
-//	for (int i = 0; i < len; i++) {
-//		char ch = 'A' + rand() % 26;
-//		str.push_back(ch);
-//	}
-//	return str;
-//}
-//
-//class Student {
-//	int roll;
-//	string name;
-//	int age;
-//	int marks;
-//
-//public:
-//	void getter()
-//	{
-//		roll = randomInt(100, 50);
-//		name = randomString(10);
-//		age = randomInt(10, 10);
-//		marks = randomInt(200, 300);
-//	}
-//	void disp()
-//	{
-//		cout << roll << "\t" << name << "\t" << age << "\t"
-//			<< marks << "\n";
-//	}
-//};
-//
-//int main()
-//{
-//	// Vector of class objects 
-//	vector<Student> v;
-//	Student s;
-//
-//	for (int i = 0; i < 10; i++) {
-//		// getting the random values from 
-//		// functions 
-//		s.getter();
-//		// inserting objects to vector 
-//		v.push_back(s);
-//	}
-//
-//	for (int i = 0; i < 10; i++) {
-//		// displaying object data 
-//		v[i].disp();
-//	}
-//
-//	return 0;
-//}
