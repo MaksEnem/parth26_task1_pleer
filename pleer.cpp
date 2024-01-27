@@ -5,7 +5,6 @@
 class Track
 {
 private:
-
 	std::string nameTrack;
 	std::string dateOfCreationTrack;
 	int durationTrack;
@@ -57,8 +56,8 @@ public:
 
 	void SetDurationTrack()
 	{
-		int volueDurationTrack = std::rand() % 20;
-		durationTrack = volueDurationTrack;
+		int valueDurationTrack = std::rand() % 20;
+		durationTrack = valueDurationTrack;
 	}
 
 	int GetDurationTrack()
@@ -68,12 +67,66 @@ public:
 
 	void PrintTrack()
 	{
-
 		std::cout << nameTrack << " " << dateOfCreationTrack << " " << durationTrack << std::endl;
-
 	}
+
+	
+	
 };
 
+class Player
+{
+private:
+	std::string nameMusic;
+	std::string dateOfCreationMusic;
+	int durationMusic;
+	int nextNumber;
+
+public:
+
+	std::string GetNameSong(std::string songName, std::vector <Track> track)
+	{		
+		for (int i = 0; i < track.size(); ++i)
+		{
+			if (songName == track[i].GetNameTrack())
+			{
+				return songName;
+			}			
+		}
+		songName = "There is no track with this name in the playlist";
+		return songName;
+	}
+
+
+
+
+
+
+
+
+
+	int GetNumberSong(std::string songName, std::vector <Track> track)
+	{
+		for (int i = 0; i < track.size(); ++i) {
+			if (songName == track[i].GetNameTrack())
+			{
+				return i;
+			}
+		}
+	}
+
+	void GetSongCreationDate(std::string songName, std::vector <Track> track)
+	{
+
+		track[GetNumberSong(songName, track)].PrintTrack();
+
+		//dateOfCreationMusic = GetNumberSong(songName, track);
+		////dateOfCreationMusic = track.GetDateOfCreationTrack(GetNumberSong(songName, track));
+		//
+		//return dateOfCreationMusic;
+	}
+	
+};
 
 
 int main()
@@ -100,15 +153,50 @@ int main()
 	composition3.SetDurationTrack();
 	track.push_back(composition3);
 		
-	//track[2].PrintTrack();
 
-	std::string command;
 
+
+
+	Player examination;
+
+	
+
+	
+	track[0].PrintTrack();
+	track[1].PrintTrack();
+	track[2].PrintTrack();
+	
+	std::string command; 
+	std::string songName;
+	int timer = 0;
+	bool is_playback = false;
 	do
 	{
 		std::cout << "Enter command: ";
 		std::cin >> command;
 
+		std::time_t tt = std::time(nullptr);
+		std::tm time_tt;
+		localtime_s(&time_tt, &tt);
+
+		if (command == "play" && (tt >= timer))
+		{
+			do {
+				std::cout << "Enter song title: ";
+				std::cin >> songName;
+			} while (examination.GetNameSong(songName, track) == "There is no track with this name in the playlist");			
+
+			track[examination.GetNumberSong(songName, track)].PrintTrack();			
+
+			timer = track[examination.GetNumberSong(songName, track)].GetDurationTrack();			
+			std::time_t tt_timer = std::time(nullptr) + timer;
+			std::tm time_timer;
+
+			localtime_s(&time_timer, &tt_timer);
+
+			timer = tt_timer;
+			is_playback = true;
+		}
 
 	} while (command != "exit");
 
