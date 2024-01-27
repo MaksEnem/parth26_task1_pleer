@@ -197,6 +197,12 @@ int main()
 			timer = tt_timer;
 			is_playback = true;
 		}
+		else if (command == "pause" && is_playback == true) 
+		{
+			std::cout << "Paused recording" << std::endl;
+			timer = 0;
+			is_playback = false;
+		}
 
 	} while (command != "exit");
 
